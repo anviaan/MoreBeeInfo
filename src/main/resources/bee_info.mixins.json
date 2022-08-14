@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.anvian.bee_info.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "ExampleMixin",
+    "TooltipMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
