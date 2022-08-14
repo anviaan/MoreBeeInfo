@@ -9,9 +9,9 @@
     "anvian"
   ],
   "contact": {
-    "homepage": "",
-    "sources": "",
-    "issues": ""
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/morebeeinfo",
+    "sources": "https://github.com/anviaan/MoreBeeInfo",
+    "issues": "https://github.com/anviaan/MoreBeeInfo/issues"
   },
 
   "license": "GPL-3.0v",
