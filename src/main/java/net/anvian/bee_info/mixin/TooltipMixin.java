@@ -43,7 +43,7 @@ public abstract class TooltipMixin {
                     }
 
                     NbtList bees = tag.getCompound("BlockEntityTag").getList("Bees", 10);
-                    int beeCount = bees.size();
+                    int beeCount = bees.size();//beeCount
 
                     for (int i = 0; i < beeCount; i++)
                     {
