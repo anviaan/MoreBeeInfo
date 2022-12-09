@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "More Bee info ",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Add the number of bees and honey level in the bee nest and beehive!",
   "authors": [
     "anvian"
   ],
