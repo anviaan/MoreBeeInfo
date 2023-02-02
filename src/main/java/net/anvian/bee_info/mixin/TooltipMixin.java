@@ -20,8 +20,7 @@ import java.util.List;
 
 @Mixin(ItemStack.class)
 public abstract class TooltipMixin {
-    @Shadow
-    public abstract boolean isEmpty();
+    @Shadow public abstract boolean isEmpty();
     @Shadow public abstract Item getItem();
     @Shadow public abstract NbtCompound getNbt();
 

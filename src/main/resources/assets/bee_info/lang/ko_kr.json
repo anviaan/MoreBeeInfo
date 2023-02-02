@@ -1,0 +1,5 @@
+{
+    "tooltip.bees": "§e꿀벌 수 : %d",
+    "tooltip.honey": "§e꿀 레벨 : %s/5",
+    "tooltip.name": "§e- %s"
+}
