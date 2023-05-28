@@ -1,5 +1,5 @@
 {
-    "tooltip.bees": "§e蜜蜂數：％d",
-    "tooltip.honey": "§e蜂蜜水平：％S/5",
-    "tooltip.name": "§e-％s"
+    "tooltip.bees": "§e 蜜蜂：％d",
+    "tooltip.honey": "§e 級：％s/5",
+    "tooltip.name": "§e- ％s"
 }

@@ -1,5 +1,5 @@
 {
-    "tooltip.bees": "§eNúmero de abelhas: %d",
-    "tooltip.honey": "§eNível de mel: %s/5",
+    "tooltip.bees": "§e Abelhas: %d",
+    "tooltip.honey": "§e Nível: %s/5",
     "tooltip.name": "§e- %s"
 }

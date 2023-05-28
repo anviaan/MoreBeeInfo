@@ -1,5 +1,5 @@
 {
-    "tooltip.bees": "§eミツバチの数：％d",
-    "tooltip.honey": "§eハニーレベル：％s/5",
-    "tooltip.name": "§e-％s"
+    "tooltip.bees": "§e ミツバチ： ％d",
+    "tooltip.honey": "§e レベル： ％s/5",
+    "tooltip.name": "§e- ％s"
 }
