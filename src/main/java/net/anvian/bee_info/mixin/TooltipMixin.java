@@ -44,8 +44,7 @@ public abstract class TooltipMixin {
                     NbtList bees = tag.getCompound("BlockEntityTag").getList("Bees", 10);
                     int beeCount = bees.size();//beeCount
 
-                    for (int i = 0; i < beeCount; i++)
-                    {
+                    for (int i = 0; i < beeCount; i++) {
                         tag = bees.getCompound(i).getCompound("EntityData");
                         if (tag != null && tag.contains("CustomName", 8))
                         {
