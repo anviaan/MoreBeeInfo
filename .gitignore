@@ -1,33 +1,43 @@
-# gradle
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+build
+.gradle
+
+eclipse
+run
+
+forge*changelog.txt
 
 .gradle/
 build/
 out/
 classes/
 
-# eclipse
-
-*.launch
-
-# idea
-
 .idea/
-*.iml
-*.ipr
-*.iws
 
-# vscode
 
 .settings/
 .vscode/
 bin/
-.classpath
-.project
 
-# macos
 
 *.DS_Store
 
-# fabric
 
 run/
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr

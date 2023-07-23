@@ -1,15 +1,27 @@
 package net.anvian.bee_info;
 
-import net.fabricmc.api.ModInitializer;
+import com.mojang.logging.LogUtils;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class MoreBeeInfoMod implements ModInitializer {
-	public static final Logger LOGGER = LoggerFactory.getLogger("bee_info");
+@Mod(MoreBeeInfoMod.MODID)
+public class MoreBeeInfoMod {
+    public static final String MODID = "bee_info";
+    private static final Logger LOGGER = LogUtils.getLogger();
 
-	@Override
-	public void onInitialize() {
+    public MoreBeeInfoMod() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		LOGGER.info("Hello Fabric world!");
-	}
+        modEventBus.addListener(this::commonSetup);
+
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        LOGGER.info("Hello from MoreBeeInfo!");
+    }
 }
