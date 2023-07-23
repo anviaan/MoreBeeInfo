@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "net.anvian.bee_info.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "MoreBeeInfo.refmap.json",
+  "refmap": "bee_info.refmap.json",
   "mixins": [
   ],
   "client": [
