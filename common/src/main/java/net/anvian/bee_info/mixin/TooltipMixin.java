@@ -28,7 +28,7 @@ public abstract class TooltipMixin {
 
     @Shadow
     public abstract CompoundTag getTag();
-    //TODO honey_level is not working
+
     @Inject(method = "getTooltipLines", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void getTooltipdone(Player playerIn, TooltipFlag advanced, CallbackInfoReturnable<List> ci, List<Component> list) {
 
