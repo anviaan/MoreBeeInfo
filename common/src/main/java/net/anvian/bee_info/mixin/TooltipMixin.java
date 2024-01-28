@@ -31,7 +31,6 @@ public abstract class TooltipMixin {
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void getTooltipdone(Player playerIn, TooltipFlag advanced, CallbackInfoReturnable<List> ci, List<Component> list) {
-
         try {
             if (!this.isEmpty() && (this.getItem() == Items.BEEHIVE || this.getItem() == Items.BEE_NEST)) {
                 CompoundTag tag = this.getTag();
