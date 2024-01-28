@@ -36,9 +36,9 @@ public abstract class TooltipMixin {
             if (!this.isEmpty() && (this.getItem() == Items.BEEHIVE || this.getItem() == Items.BEE_NEST)) {
                 CompoundTag tag = this.getTag();
                 if (tag != null) {
-
                     int honeyLevel = tag.getCompound("BlockStateTag").getInt("honey_level");
                     String honeyLevelStr = tag.getCompound("BlockStateTag").getString("honey_level");
+
                     if (honeyLevelStr != null || !honeyLevelStr.isEmpty()) {
                         try {
                             honeyLevel = Integer.parseInt(honeyLevelStr);//honey level
