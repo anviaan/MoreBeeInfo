@@ -42,7 +42,7 @@ public abstract class TooltipMixin {
                     if (honeyLevelStr != null || !honeyLevelStr.isEmpty()) {
                         try {
                             honeyLevel = Integer.parseInt(honeyLevelStr);//honey level
-                        } catch (NumberFormatException ex) {
+                        } catch (NumberFormatException ignored) {
                         }
                     }
 
