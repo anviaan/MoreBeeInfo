@@ -1,4 +1,4 @@
 {
-    "tooltip.bees": "Api: %d/%d",
-    "tooltip.honey": "Miele: %d/%d"
+    "tooltip.bees": "Api",
+    "tooltip.honey": "Miele"
 }
