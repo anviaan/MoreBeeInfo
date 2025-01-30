@@ -1,37 +1,46 @@
 {
-    "schemaVersion": 1,
-    "id": "${mod_id}",
-    "version": "${version}",
-    "name": "${mod_name}",
-    "description": "${description}",
-    "authors": [
-        "${mod_author}"
-    ],
-    "contact": {
-        "homepage": "https://modrinth.com/mod/morebeeinfo",
-        "sources": "https://github.com/anviaan/MoreBeeInfo",
-        "issues": "https://github.com/anviaan/MoreBeeInfo/issues"
-    },
-    "license": "${license}",
-    "icon": "${mod_id}.png",
-    "environment": "*",
-    "entrypoints": {
-        "main": [
-            "net.anvian.bee_info.FabricMod"
-        ]
-    },
-    "mixins": [
-        "${mod_id}.mixins.json",
-        "${mod_id}.fabric.mixins.json"
-    ],
-    "depends": {
-        "fabricloader": ">=${fabric_loader_version}",
-        "fabric-api": "*",
-        "minecraft": ">=${minecraft_version}",
-        "java": ">=${java_version}"
-    },
-    "suggests": {
-        "another-mod": "*"
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/morebeeinfo",
+    "sources": "https://github.com/anviaan/MoreBeeInfo",
+    "issues": "https://github.com/anviaan/MoreBeeInfo/issues"
+  },
+  "license": "${license}",
+  "icon": "${mod_id}.png",
+  "environment": "*",
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/morebeeinfo",
+        "modmenu.modrinth": "https://modrinth.com/mod/morebeeinfo"
+      }
     }
+  },
+  "entrypoints": {
+    "main": [
+      "net.anvian.sculkhornid.FabricMod"
+    ]
+  },
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": ">=${minecraft_version}",
+    "java": ">=${java_version}",
+    "anvianslib": ">=${anvianslib_version}"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
 }
   

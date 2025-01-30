@@ -1,34 +1,42 @@
 modLoader = "javafml"
 loaderVersion = "${neoforge_loader_version_range}"
 license = "${license}"
-issueTrackerURL="https://github.com/anviaan/MoreBeeInfo/issues"
+issueTrackerURL = "https://github.com/anviaan/MoreBeeInfo/issues"
 
 [[mods]]
 modId = "${mod_id}"
 version = "${version}"
 displayName = "${mod_name}"
-updateJSONURL="https://api.modrinth.com/updates/N2XKPu4u/forge_updates.json"
-displayURL="https://modrinth.com/mod/morebeeinfo"
-logoFile="${mod_id}.png"
-credits="${credits}"
+updateJSONURL = "https://api.modrinth.com/updates/N2XKPu4u/forge_updates.json"
+displayURL = "https://modrinth.com/mod/morebeeinfo"
+logoFile = "${mod_id}.png"
+credits = "${credits}"
 authors = "${mod_author}"
 description = "${description}"
 
 [[mixins]]
 config = "${mod_id}.mixins.json"
+
 [[mixins]]
 config = "${mod_id}.neoforge.mixins.json"
 
-[[dependencies.${mod_id}]]
+[[dependencies.${ mod_id }]]
 modId = "neoforge"
-type="required"
+type = "required"
 versionRange = "${neoforge_loader_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.${ mod_id }]]
 modId = "minecraft"
-type="required"
+type = "required"
 versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
+modId = "anvianslib"
+type = "required"
+versionRange = "[1.0,)"
 ordering = "NONE"
 side = "BOTH"
