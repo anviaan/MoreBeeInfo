@@ -1,4 +1,4 @@
 {
-    "tooltip.bees": "Пчелы: %d/%d",
-    "tooltip.honey": "Мед: %d/%d"
+    "tooltip.bees": "Пчелы",
+    "tooltip.honey": "Мед"
 }

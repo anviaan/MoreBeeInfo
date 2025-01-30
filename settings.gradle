@@ -45,7 +45,7 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.9.0'
 }
 
-rootProject.name = 'SculkHorn'
-include("common")
-include("fabric")
-include("neoforge")
+rootProject.name = 'MoreBeeInfo'
+include('common')
+include('fabric')
+include('neoforge')

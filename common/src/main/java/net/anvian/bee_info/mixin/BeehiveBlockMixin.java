@@ -47,7 +47,7 @@ public abstract class BeehiveBlockMixin extends BaseEntityBlock {
     private void moreBeeInfo$appendHoneyLevelText(List<Component> componentList, BlockItemStateProperties blockState) {
         try {
             int honeyLevel = Integer.parseInt(blockState.properties().getOrDefault("honey_level", "0"));
-            MutableComponent levelText = Component.literal(String.format("Honey: %d/%d", honeyLevel, MAX_HONEY_LEVELS))
+            MutableComponent levelText = Component.translatable("tooltip.honey").append(": ").append(honeyLevel + "/" + MAX_HONEY_LEVELS)
                     .withStyle(moreBeeInfo$defaultFormatting);
             componentList.add(levelText);
         } catch (NumberFormatException e) {
@@ -58,7 +58,7 @@ public abstract class BeehiveBlockMixin extends BaseEntityBlock {
     @Unique
     private void moreBeeInfo$appendBeeCountText(List<Component> componentList, List<BeehiveBlockEntity.Occupant> beeData) {
         final int MAX_BEES = 3;
-        MutableComponent beeText = Component.literal(String.format("Bees: %d/%d", beeData.size(), MAX_BEES))
+        MutableComponent beeText = Component.translatable("tooltip.bees").append(": ").append(beeData.size() + "/" + MAX_BEES)
                 .withStyle(moreBeeInfo$defaultFormatting);
         componentList.add(beeText);
     }
