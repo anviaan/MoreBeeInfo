@@ -42,6 +42,10 @@ repositories {
         name = 'BlameJared'
         url = 'https://maven.blamejared.com'
     }
+    maven {
+        name = 'Repsy Anvian'
+        url = 'https://repo.repsy.io/mvn/anvian/anvians-lib'
+    }
 }
 
 // Declare capabilities on the outgoing configurations.
@@ -97,7 +101,8 @@ processResources {
             'neoforge_version'             : neoforge_version,
             'neoforge_loader_version_range': neoforge_loader_version_range,
             'credits'                      : credits,
-            'java_version'                 : java_version
+            'java_version'                 : java_version,
+            'anvianslib_version'           : anvianslib_version
     ]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {

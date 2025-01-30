@@ -1,5 +1,7 @@
 package net.anvian.bee_info.platform.services;
 
+import java.nio.file.Path;
+
 public interface IPlatformHelper {
     /**
      * Gets the name of the current platform
@@ -31,4 +33,6 @@ public interface IPlatformHelper {
     default String getEnvironmentName() {
         return isDevelopmentEnvironment() ? "development" : "production";
     }
+
+    Path getGameConfigDirectory();
 }
