@@ -1,5 +1,4 @@
 {
-    "tooltip.bees": "§e К-ть бджіл: %d",
-    "tooltip.honey": "§e Рівень: %s/5",
-    "tooltip.name": "§e- %s"
+    "tooltip.bees": "К-ть бджіл",
+    "tooltip.honey": "Мед"
 }

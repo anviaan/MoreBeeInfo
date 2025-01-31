@@ -1,5 +1,4 @@
 {
-    "tooltip.bees": "§e Api: %d",
-    "tooltip.honey": "§e Livello: %s/5",
-    "tooltip.name": "§e- %s"
+    "tooltip.bees": "Api",
+    "tooltip.honey": "Miele"
 }

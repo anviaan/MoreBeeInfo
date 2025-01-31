@@ -1,9 +1,10 @@
 package net.anvian.bee_info.mixin;
 
-import net.minecraft.client.resources.language.I18n;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -48,16 +50,8 @@ public abstract class TooltipMixin {
                     ListTag bees = tag.getCompound("BlockEntityTag").getList("Bees", 10);
                     int beeCount = bees.size();//beeCount
 
-                    for (int i = 0; i < beeCount; i++) {
-                        tag = bees.getCompound(i).getCompound("EntityData");
-                        if (tag != null && tag.contains("CustomName", 8)) {
-                            String beeName = tag.getString("CustomName");
-                            list.add(Math.min(1, list.size()), Component.nullToEmpty(I18n.get("tooltip.name", Component.Serializer.fromJson(beeName).getString())));
-                        }
-                    }
-
-                    list.add(Math.min(1, list.size()), Component.nullToEmpty(I18n.get("tooltip.bees", beeCount)));
-                    list.add(Math.min(1, list.size()), Component.nullToEmpty(I18n.get("tooltip.honey", honeyLevel)));
+                    list.add(Math.min(1, list.size()), moreBeeInfo$appendHoneyLevelText(honeyLevel));
+                    list.add(Math.min(1, list.size()), moreBeeInfo$appendBeeCountText(beeCount));
                 }
             }
         } catch (NullPointerException ex) {
@@ -69,5 +63,18 @@ public abstract class TooltipMixin {
                 System.out.println("item is " + this.getItem().getDescriptionId());
             }
         }
+    }
+
+    @Unique
+    private MutableComponent moreBeeInfo$appendBeeCountText(int beeCount) {
+        final int MAX_BEES = 3;
+        return Component.translatable("tooltip.bees").append(": ").append(beeCount + "/" + MAX_BEES)
+                .withStyle(ChatFormatting.YELLOW);
+    }
+
+    @Unique
+    private MutableComponent moreBeeInfo$appendHoneyLevelText(int honeyLevel) {
+        return Component.translatable("tooltip.honey").append(": ").append(honeyLevel + "/" + honeyLevel)
+                .withStyle(ChatFormatting.YELLOW);
     }
 }
