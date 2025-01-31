@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT' apply(false)
+    id 'fabric-loom' version '1.7-SNAPSHOT' apply(false)
     id 'net.minecraftforge.gradle' version '[6.0,6.2)' apply(false)
     id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT' apply(false)
     id("org.spongepowered.mixin") version "0.7-SNAPSHOT" apply(false)
@@ -48,6 +48,10 @@ subprojects {
             name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf)'
             url = 'https://maven.blamejared.com'
         }
+        maven {
+            name = 'Repsy Anvian'
+            url = 'https://repo.repsy.io/mvn/anvian/anvians-lib'
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {
@@ -72,7 +76,8 @@ subprojects {
                 "mod_id": mod_id,
                 "license": license,
                 "description": project.description,
-                "mod_menu_version": mod_menu_version
+                "mod_menu_version": mod_menu_version,
+                "anvianslib_version": anvianslib_version
         ]
 
         filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
