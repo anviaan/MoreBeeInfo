@@ -1,26 +1,34 @@
 plugins {
-    id 'multiloader-loader'
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'java'
+    id 'idea'
+    id 'maven-publish'
+    id 'fabric-loom'
 }
+
+base {
+    archivesName = "${mod_name}-fabric-${minecraft_version}"
+}
+
 repositories {
     maven {
         name = "Mod Menu"
         url = "https://maven.terraformersmc.com/releases/"
     }
 }
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     modLocalRuntime("com.terraformersmc:modmenu:${mod_menu_version}")
+    implementation project(":common")
 }
 
 loom {
-    def aw = project(":common").file("src/main/resources/${mod_id}.accesswidener")
-    if (aw.exists()) {
-        accessWidenerPath.set(aw)
+    if (project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
+        accessWidenerPath.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
     }
     mixin {
         defaultRefmapName.set("${mod_id}.refmap.json")
@@ -30,13 +38,41 @@ loom {
             client()
             setConfigName("Fabric Client")
             ideConfigGenerated(true)
-            runDir("runs/client")
+            runDir("run")
         }
         server {
             server()
             setConfigName("Fabric Server")
             ideConfigGenerated(true)
-            runDir("runs/server")
+            runDir("run")
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    source(project(":common").sourceSets.main.allSource)
+}
+tasks.withType(Javadoc).configureEach {
+    source(project(":common").sourceSets.main.allJava)
+}
+tasks.named("sourcesJar", Jar) {
+    from(project(":common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":common").sourceSets.main.resources
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId base.archivesName.get()
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "file://" + System.getenv("local_maven")
         }
     }
 }

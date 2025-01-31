@@ -10,7 +10,6 @@ displayName = "${mod_name}"
 updateJSONURL="https://api.modrinth.com/updates/{modrinthModId}/forge_updates.json"
 displayURL="https://modrinth.com/mod/morebeeinfo"
 logoFile = "${mod_id}.png"
-credits = "${credits}"
 authors = "${mod_author}"
 description = '''${description}'''
 
