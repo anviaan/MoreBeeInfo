@@ -1,0 +1,30 @@
+modLoader = "javafml"
+loaderVersion = "[41,)"
+license = "GPL-3.0"
+issueTrackerURL = "https://github.com/anviaan/MoreBeeInfo/issues"
+
+[[mods]]
+modId = "bee_info"
+version = "${version}"
+displayName = "MoreBeeInfo"
+updateJSONURL = "https://api.modrinth.com/updates/N2XKPu4u/forge_updates.json"
+displayURL = "https://modrinth.com/mod/morebeeinfo"
+authors = "anvian"
+description = '''
+Add the number of bees and honey level in the bee nest and beehive!
+'''
+logoFile = "bee_info.png"
+
+[[dependencies.bee_info]]
+modId = "forge"
+mandatory = true
+versionRange = "[41,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.bee_info]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19,)"
+ordering = "NONE"
+side = "BOTH"

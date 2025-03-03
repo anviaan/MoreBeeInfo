@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "bee_info",
+  "version": "${version}",
+  "name": "MoreBeeInfo",
+  "description": "Add the number of bees and honey level in the bee nest and beehive!",
+  "authors": [
+    "anvian"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/morebeeinfo",
+    "sources": "https://github.com/anviaan/MoreBeeInfo",
+    "issues": "https://github.com/anviaan/MoreBeeInfo/issues"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/morebeeinfo",
+        "modmenu.modrinth": "https://modrinth.com/mod/morebeeinfo"
+      }
+    }
+  },
+  "license": "GPL-3.0",
+  "icon": "bee_info.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.anvian.anvianslib.fabric.FabricMod"
+    ]
+  },
+  "mixins": [
+    "bee_info.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": ">=1.19",
+    "java": ">=17",
+    "fabric": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

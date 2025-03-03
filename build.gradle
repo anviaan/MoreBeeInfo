@@ -35,6 +35,13 @@ subprojects {
         silentMojangMappingsLicense()
     }
 
+    repositories {
+        maven {
+            name = 'Repsy Anvian'
+            url = 'https://repo.repsy.io/mvn/anvian/anvians-lib'
+        }
+    }
+
     dependencies {
         minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
         mappings loom.officialMojangMappings()
@@ -49,42 +56,5 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.release = 17
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = base.archivesName.get()
-                from components.java
-                pom {
-                    name = "anvian's Lib"
-                    description = "A small utility library for Anvian's mods."
-                    url = 'https://github.com/anviaan/anvians-lib/'
-                    licenses {
-                        license {
-                            name = 'GNU GPLv3'
-                            url = 'https://github.com/anviaan/anvians-lib/blob/main/LICENSE'
-                            distribution = 'repo'
-                        }
-                    }
-                    developers {
-                        developer {
-                            name = 'anvian'
-                        }
-                    }
-                }
-            }
-        }
-
-        repositories {
-            maven {
-                name = "Repsy"
-                url = uri("https://repo.repsy.io/mvn/anvian/anvians-lib")
-                credentials {
-                    username = "anvian"
-                    password = project.findProperty("gpr.token") ?: System.getenv("REPSY_TOKEN")
-                }
-            }
-        }
     }
 }
