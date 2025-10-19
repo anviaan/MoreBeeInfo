@@ -28,7 +28,7 @@ mandatory = true
 versionRange = "[1.19,)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.${ mod_id }]]
+[[dependencies.bee_info]]
 modId = "anvianslib"
 mandatory = true
 versionRange = "[1.4,)"
