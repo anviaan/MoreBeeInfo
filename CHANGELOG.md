@@ -1,2 +1,1 @@
-- Por to version 1.4
-  - Anvian's Lib is required
+- Por to version 1.4.1 to support anvian's lib 1.4

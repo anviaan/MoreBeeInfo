@@ -18,7 +18,7 @@ dependencies {
 
     modLocalRuntime("com.terraformersmc:modmenu:10.0.0-beta.1")
 
-    modImplementation "net.anvian.anvianslib:anvianslib-fabric-1.20.6:${anvianslib_version}"
+    modImplementation "net.anvian.anvianslib:anvianslib-fabric-1.20:${anvianslib_version}"
 }
 
 loom {
