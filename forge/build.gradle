@@ -76,7 +76,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":common")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-    implementation "net.anvian.anvianslib:anvianslib-forge-1.20:${anvianslib_version}"
+    implementation "net.anvian.anvianslib:anvianslib-forge-1.20.1:${anvianslib_version}"
 }
 
 tasks.withType(JavaCompile).configureEach {

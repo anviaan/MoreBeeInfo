@@ -25,3 +25,9 @@ mandatory = true
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
+[[dependencies.${ mod_id }]]
+modId = "anvianslib"
+mandatory = true
+versionRange = "[${anvianslib_version},)"
+ordering = "NONE"
+side = "BOTH"
