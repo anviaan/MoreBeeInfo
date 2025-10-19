@@ -6,10 +6,11 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.BeehiveBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -34,7 +35,7 @@ public abstract class TooltipMixin {
     @Inject(method = "getTooltipLines", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void getTooltipdone(Player playerIn, TooltipFlag advanced, CallbackInfoReturnable<List> ci, List<Component> list) {
         try {
-            if (!this.isEmpty() && (this.getItem() == Items.BEEHIVE || this.getItem() == Items.BEE_NEST)) {
+            if (!this.isEmpty() && this.getItem() instanceof BlockItem bi && bi.getBlock() instanceof BeehiveBlock) {
                 CompoundTag tag = this.getTag();
                 if (tag != null) {
                     int honeyLevel = tag.getCompound("BlockStateTag").getInt("honey_level");
