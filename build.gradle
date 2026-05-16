@@ -64,6 +64,7 @@ publishing {
     publications {
         create("mavenJava", MavenPublication) {
             from components.java
+            artifactId = "${project.name}-fabric-${project.minecraft_version}"
         }
     }
 
