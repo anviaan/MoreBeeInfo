@@ -54,7 +54,7 @@ public abstract class TooltipMixin {
         ListTag bees = rootTag.getCompound("BlockEntityTag").getList("Bees", TAG_COMPOUND);
         int beeCount = bees.size();
 
-        Style yellow = new Style().setColor(ChatFormatting.YELLOW);
+        Style yellow = Style.EMPTY.withColor(ChatFormatting.YELLOW);
 
         for (int i = 0; i < beeCount; i++) {
             CompoundTag entityData = bees.getCompound(i).getCompound("EntityData");
