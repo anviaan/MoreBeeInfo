@@ -1,1 +1,1 @@
-- Add support to anvian's lib 1.4
+- Refactor tooltip system, update localization keys
