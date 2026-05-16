@@ -1,4 +1,4 @@
 {
-    "tooltip.bees": "ミツバチ",
-    "tooltip.honey": "はちみつ"
+    "bee_info.tooltip.bees": "ミツバチ",
+    "bee_info.tooltip.honey": "ハニーレベル"
 }

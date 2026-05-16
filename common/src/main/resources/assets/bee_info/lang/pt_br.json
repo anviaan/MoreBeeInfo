@@ -1,4 +1,4 @@
 {
-    "tooltip.bees": "Abelhas",
-    "tooltip.honey": "Mel"
+    "bee_info.tooltip.bees": "Abelhas",
+    "bee_info.tooltip.honey": "Nível de mel"
 }

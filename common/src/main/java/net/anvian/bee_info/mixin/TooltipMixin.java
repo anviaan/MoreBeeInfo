@@ -1,28 +1,33 @@
 package net.anvian.bee_info.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.block.BeehiveBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 
 @Mixin(ItemStack.class)
 public abstract class TooltipMixin {
+    @Unique
+    private static final int TAG_COMPOUND = 10;
+    @Unique
+    private static final int TAG_STRING = 8;
+
     @Shadow
     public abstract boolean isEmpty();
 
@@ -32,50 +37,47 @@ public abstract class TooltipMixin {
     @Shadow
     public abstract CompoundTag getTag();
 
-    @Inject(method = "getTooltipLines", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void getTooltipdone(Player playerIn, TooltipFlag advanced, CallbackInfoReturnable<List> ci, List<Component> list) {
-        try {
-            if (!this.isEmpty() && this.getItem() instanceof BlockItem bi && bi.getBlock() instanceof BeehiveBlock) {
-                CompoundTag tag = this.getTag();
-                if (tag != null) {
-                    int honeyLevel = tag.getCompound("BlockStateTag").getInt("honey_level");
-                    String honeyLevelStr = tag.getCompound("BlockStateTag").getString("honey_level");
+    @Inject(method = "getTooltipLines", at = @At("RETURN"))
+    private void getTooltipdone(Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, @Local(name = "list") List<Component> list) {
+        if (this.isEmpty()) return;
 
-                    if (honeyLevelStr != null || !honeyLevelStr.isEmpty()) {
-                        try {
-                            honeyLevel = Integer.parseInt(honeyLevelStr);//honey level
-                        } catch (NumberFormatException ignored) {
-                        }
-                    }
+        Item item = this.getItem();
+        if (item != Items.BEEHIVE && item != Items.BEE_NEST) return;
 
-                    ListTag bees = tag.getCompound("BlockEntityTag").getList("Bees", 10);
-                    int beeCount = bees.size();//beeCount
+        CompoundTag rootTag = this.getTag();
+        if (rootTag == null) return;
 
-                    list.add(Math.min(1, list.size()), moreBeeInfo$appendHoneyLevelText(honeyLevel));
-                    list.add(Math.min(1, list.size()), moreBeeInfo$appendBeeCountText(beeCount));
-                }
-            }
-        } catch (NullPointerException ex) {
-            System.out.println("NPE in getTooltipdone");
-            Item item = this.getItem();
-            if (item == null) {
-                System.out.println("item is null");
-            } else {
-                System.out.println("item is " + this.getItem().getDescriptionId());
+        int honeyLevel = moreBeeInfo$parseHoneyLevel(rootTag.getCompound("BlockStateTag"));
+
+        ListTag bees = rootTag.getCompound("BlockEntityTag").getList("Bees", TAG_COMPOUND);
+        int beeCount = bees.size();
+
+        Style yellow = Style.EMPTY.withColor(ChatFormatting.YELLOW);
+
+        for (int i = 0; i < beeCount; i++) {
+            CompoundTag entityData = bees.getCompound(i).getCompound("EntityData");
+            if (entityData.contains("CustomName", TAG_STRING)) {
+                String beeName = entityData.getString("CustomName");
+                list.add(Math.min(1, list.size()), Component.literal("- " + Component.Serializer.fromJson(beeName).getString()).setStyle(yellow));
             }
         }
+
+        String beesLabel = I18n.get("bee_info.tooltip.bees");
+        list.add(Math.min(1, list.size()), Component.literal(beesLabel + ": " + beeCount).setStyle(yellow));
+
+        String honeyLabel = I18n.get("bee_info.tooltip.honey");
+        list.add(Math.min(1, list.size()), Component.literal(honeyLabel + ": " + honeyLevel + "/5").setStyle(yellow));
     }
 
     @Unique
-    private MutableComponent moreBeeInfo$appendBeeCountText(int beeCount) {
-        final int MAX_BEES = 3;
-        return Component.translatable("tooltip.bees").append(": ").append(beeCount + "/" + MAX_BEES)
-                .withStyle(ChatFormatting.YELLOW);
-    }
-
-    @Unique
-    private MutableComponent moreBeeInfo$appendHoneyLevelText(int honeyLevel) {
-        return Component.translatable("tooltip.honey").append(": ").append(honeyLevel + "/" + honeyLevel)
-                .withStyle(ChatFormatting.YELLOW);
+    private static int moreBeeInfo$parseHoneyLevel(CompoundTag blockStateTag) {
+        String honeyLevelStr = blockStateTag.getString("honey_level");
+        if (honeyLevelStr.isEmpty()) return 0;
+        try {
+            return Integer.parseInt(honeyLevelStr);
+        } catch (NumberFormatException e) {
+            System.out.println("MoreBeeInfo: could not parse honey_level '" + honeyLevelStr + "'");
+            return 0;
+        }
     }
 }

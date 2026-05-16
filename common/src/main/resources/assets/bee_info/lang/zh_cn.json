@@ -1,4 +1,4 @@
 {
-    "tooltip.bees": "蜜蜂",
-    "tooltip.honey": "蜂蜜"
+    "bee_info.tooltip.bees": "蜜蜂",
+    "bee_info.tooltip.honey": "蜂蜜等级"
 }

@@ -2,6 +2,7 @@ plugins {
     id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id 'maven-publish'
 }
 
 architectury {
@@ -56,5 +57,28 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.release = 17
+    }
+    publishing {
+        publications {
+            create("mavenJava", MavenPublication) {
+                from components.java
+                artifactId = "bee_info-${project.name}-${project.minecraft_version}"
+            }
+        }
+
+        repositories {
+            maven {
+                name = "Reposilite"
+                url = uri(
+                        version.toString().endsWith("SNAPSHOT")
+                                ? "https://maven.anvian.net/snapshots"
+                                : "https://maven.anvian.net/releases"
+                )
+                credentials {
+                    username = project.findProperty("reposilite.user") ?: System.getenv("REPOSILITE_USER")
+                    password = project.findProperty("reposilite.token") ?: System.getenv("REPOSILITE_TOKEN")
+                }
+            }
+        }
     }
 }
