@@ -3,6 +3,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)' apply(false)
     id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT' apply(false)
     id("org.spongepowered.mixin") version "0.7-SNAPSHOT" apply(false)
+    id 'maven-publish'
 }
 
 tasks.register("printEnv") {
@@ -16,27 +17,28 @@ tasks.register("printEnv") {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
     java.withSourcesJar()
     java.withJavadocJar()
-        
+
     jar {
         from(rootProject.file("LICENSE")) {
             rename { "${it}_${mod_name}" }
         }
         manifest {
             attributes([
-                'Specification-Title'     : mod_name,
-                'Specification-Vendor'    : mod_author,
-                'Specification-Version'   : project.jar.archiveVersion,
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_author,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'Timestamp'               : System.currentTimeMillis(),
-                'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
-                'Built-On-Minecraft'      : minecraft_version
+                    'Specification-Title'     : mod_name,
+                    'Specification-Vendor'    : mod_author,
+                    'Specification-Version'   : project.jar.archiveVersion,
+                    'Implementation-Title'    : project.name,
+                    'Implementation-Version'  : project.jar.archiveVersion,
+                    'Implementation-Vendor'   : mod_author,
+                    'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                    'Timestamp'               : System.currentTimeMillis(),
+                    'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+                    'Built-On-Minecraft'      : minecraft_version
             ])
         }
     }
@@ -64,29 +66,29 @@ subprojects {
     }
 
     tasks.withType(JavaCompile).configureEach {
-    
+
         it.options.encoding = 'UTF-8'
         it.options.getRelease().set(17)
     }
 
     processResources {
         def expandProps = [
-                "version": version,
-                "group": project.group, //Else we target the task's group.
-                "minecraft_version": minecraft_version,
-                "forge_version": forge_version,
+                "version"                   : version,
+                "group"                     : project.group, //Else we target the task's group.
+                "minecraft_version"         : minecraft_version,
+                "forge_version"             : forge_version,
                 "forge_loader_version_range": forge_loader_version_range,
-                "forge_version_range": forge_version_range,
-                "minecraft_version_range": minecraft_version_range,
-                "fabric_version": fabric_version,
-                "fabric_loader_version": fabric_loader_version,
-                "mod_name": mod_name,
-                "mod_author": mod_author,
-                "mod_id": mod_id,
-                "license": license,
-                "description": project.description,
-                "mod_menu_version": mod_menu_version,
-                "anvianslib_version": anvianslib_version
+                "forge_version_range"       : forge_version_range,
+                "minecraft_version_range"   : minecraft_version_range,
+                "fabric_version"            : fabric_version,
+                "fabric_loader_version"     : fabric_loader_version,
+                "mod_name"                  : mod_name,
+                "mod_author"                : mod_author,
+                "mod_id"                    : mod_id,
+                "license"                   : license,
+                "description"               : project.description,
+                "mod_menu_version"          : mod_menu_version,
+                "anvianslib_version"        : anvianslib_version
         ]
 
         filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
@@ -94,4 +96,28 @@ subprojects {
         }
         inputs.properties(expandProps)
     }
+
+    plugins.withId('maven-publish') {
+        publishing {
+            publications {
+                create("release", MavenPublication) {
+                    from components.java
+                    artifactId = "bee_info-${project.name}-${project.minecraft_version}"
+                }
+            }
+            repositories {
+                maven {
+                    name = "Reposilite"
+                    url = uri(version.toString().endsWith("SNAPSHOT")
+                            ? "https://maven.anvian.net/snapshots"
+                            : "https://maven.anvian.net/releases")
+                    credentials {
+                        username = (project.findProperty("reposilite.user") as String) ?: System.getenv("REPOSILITE_USER")
+                        password = (project.findProperty("reposilite.token") as String) ?: System.getenv("REPOSILITE_TOKEN")
+                    }
+                }
+            }
+        }
+    }
+
 }
