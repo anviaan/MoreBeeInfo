@@ -22,7 +22,6 @@ body:
         - forge
         - fabric
         - neoforge
-        - quilt
     validations:
       required: true
 

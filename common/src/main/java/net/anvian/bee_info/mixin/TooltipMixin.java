@@ -1,6 +1,5 @@
 package net.anvian.bee_info.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
@@ -38,7 +37,8 @@ public abstract class TooltipMixin {
     public abstract CompoundTag getTag();
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
-    private void getTooltipdone(Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir, @Local(name = "list") List<Component> list) {
+    private void getTooltipdone(Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> cir) {
+        List<Component> list = cir.getReturnValue();
         if (this.isEmpty()) return;
 
         Item item = this.getItem();
