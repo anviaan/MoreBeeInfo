@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
-          java-version: ${{ secrets.JAVA_VERSION }}
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Make Gradle Wrapper Executable
         run: chmod +x gradlew
@@ -62,11 +62,12 @@ jobs:
 
           dependencies: |
             fabric-api
+            forge-config-api-port
             anvians-lib
 
           java: ${{ env.JAVA_VERSION }}
 
-      - name: Forge Publish (Modrinth & CurseForge)
+      - name: NeoForge Publish (Modrinth & CurseForge)
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ${{ env.MODRINTH_ID }}
@@ -76,7 +77,7 @@ jobs:
           curseforge-token: ${{ env.CURSEFORGE_TOKEN }}
 
           files: |
-            forge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
+            neoforge/build/libs/!(*-@(dev|sources|javadoc|shadow)).jar
 
           name: ${{ env.RELEASE_NAME }}
           version: ${{ env.MOD_VERSION }}
@@ -86,9 +87,10 @@ jobs:
           game-versions: ${{ env.GAME_VERSIONS }}
 
           loaders: |
-            forge
+            neoforge
 
           dependencies: |
+            forge-config-api-port
             anvians-lib
 
           java: ${{ env.JAVA_VERSION }}

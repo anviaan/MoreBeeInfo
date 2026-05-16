@@ -8,7 +8,7 @@ public class MoreBeeInfoCommon {
         if (Services.PLATFORM.isModLoaded(Constants.MOD_ID)) {
             Constants.LOG.info("Hello from " + Constants.MOD_ID);
 
-            LibUtil.setupTelemetry(Constants.MOD_ID, "1.4.1");
+            LibUtil.setupTelemetry(Constants.MOD_ID, "2.0.0");
         }
     }
 }
