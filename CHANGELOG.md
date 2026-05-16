@@ -1,1 +1,1 @@
-- Back port to minecraft 1.15 to 1.18 on FabricMC
+- Back port to minecraft 1.15 on FabricMC

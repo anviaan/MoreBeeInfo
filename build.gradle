@@ -3,13 +3,13 @@ plugins {
     id 'maven-publish'
 }
 
-def COMPATIBLE_VERSIONS = '[1.15, 1.19)'
+def COMPATIBLE_VERSIONS = '[1.15, 1.16)'
 
 tasks.register("printEnv") {
     doLast {
         def envFile = new File(System.getenv("GITHUB_ENV"))
         envFile.append("MOD_VERSION=${project.mod_version}\n")
-        envFile.append("RELEASE_NAME=${project.archives_base_name}-${project.mod_version_range}-${project.mod_version}\n")
+        envFile.append("RELEASE_NAME=${project.archives_base_name}-${project.minecraft_version}-${project.mod_version}\n")
         envFile.append("GAME_VERSIONS=${COMPATIBLE_VERSIONS}\n")
     }
 }
@@ -17,7 +17,7 @@ tasks.register("printEnv") {
 version = project.mod_version
 group = project.maven_group
 base {
-    archivesName = "${project.archives_base_name}-${project.mod_version_range}"
+    archivesName = "${project.archives_base_name}-${project.minecraft_version}"
 }
 
 repositories {
