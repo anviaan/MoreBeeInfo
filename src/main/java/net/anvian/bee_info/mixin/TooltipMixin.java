@@ -1,16 +1,21 @@
 package net.anvian.bee_info.mixin;
 
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -20,52 +25,61 @@ import java.util.List;
 
 @Mixin(ItemStack.class)
 public abstract class TooltipMixin {
-    @Shadow public abstract boolean isEmpty();
-    @Shadow public abstract Item getItem();
-    @Shadow public abstract NbtCompound getNbt();
+    @Unique
+    private static final int TAG_COMPOUND = 10;
+    @Unique
+    private static final int TAG_STRING = 8;
 
-    @Inject(method="getTooltip", at=@At("RETURN"), locals=LocalCapture.CAPTURE_FAILHARD)
-    private void getTooltipdone(PlayerEntity playerIn, TooltipContext advanced, CallbackInfoReturnable<List> ci, List<Text> list) {
+    @Shadow
+    public abstract boolean isEmpty();
 
+    @Shadow
+    public abstract Item getItem();
+
+    @Shadow
+    public abstract CompoundTag getTag();
+
+    @Inject(method = "getTooltipLines", at = @At("RETURN"))
+    private void getTooltipdone(Player player, TooltipFlag advanced, CallbackInfoReturnable<List<Component>> cir, @Local List<Component> list) {
+        if (this.isEmpty()) return;
+
+        Item item = this.getItem();
+        if (item != Items.BEEHIVE && item != Items.BEE_NEST) return;
+
+        CompoundTag rootTag = this.getTag();
+        if (rootTag == null) return;
+
+        int honeyLevel = parseHoneyLevel(rootTag.getCompound("BlockStateTag"));
+
+        ListTag bees = rootTag.getCompound("BlockEntityTag").getList("Bees", TAG_COMPOUND);
+        int beeCount = bees.size();
+
+        Style yellow = new Style().setColor(ChatFormatting.YELLOW);
+
+        for (int i = 0; i < beeCount; i++) {
+            CompoundTag entityData = bees.getCompound(i).getCompound("EntityData");
+            if (entityData.contains("CustomName", TAG_STRING)) {
+                String beeName = entityData.getString("CustomName");
+                list.add(Math.min(1, list.size()), new TextComponent("- " + Component.Serializer.fromJson(beeName).getString()).setStyle(yellow));
+            }
+        }
+
+        String beesLabel = I18n.get("bee_info.tooltip.bees");
+        list.add(Math.min(1, list.size()), new TextComponent(beesLabel + ": " + beeCount).setStyle(yellow));
+
+        String honeyLabel = I18n.get("bee_info.tooltip.honey");
+        list.add(Math.min(1, list.size()), new TextComponent(honeyLabel + ": " + honeyLevel + "/5").setStyle(yellow));
+    }
+
+    @Unique
+    private static int parseHoneyLevel(CompoundTag blockStateTag) {
+        String honeyLevelStr = blockStateTag.getString("honey_level");
+        if (honeyLevelStr.isEmpty()) return 0;
         try {
-            if (!this.isEmpty() && (this.getItem() == Items.BEEHIVE || this.getItem() == Items.BEE_NEST)) {
-                NbtCompound tag = this.getNbt();
-                if (tag != null) {
-
-                    int honeyLevel = tag.getCompound("BlockStateTag").getInt("honey_level");
-                    String honeyLevelStr = tag.getCompound("BlockStateTag").getString("honey_level");
-                    if (honeyLevelStr != null || !honeyLevelStr.isEmpty()) {
-                        try {
-                            honeyLevel = Integer.parseInt(honeyLevelStr);//honey level
-                        } catch (NumberFormatException ex) {
-                        }
-                    }
-
-                    NbtList bees = tag.getCompound("BlockEntityTag").getList("Bees", 10);
-                    int beeCount = bees.size();//beeCount
-
-                    for (int i = 0; i < beeCount; i++)
-                    {
-                        tag = bees.getCompound(i).getCompound("EntityData");
-                        if (tag != null && tag.contains("CustomName", 8))
-                        {
-                            String beeName = tag.getString("CustomName");
-                            list.add(Math.min(1, list.size()), Text.of(I18n.translate("tooltip.name", Text.Serializer.fromJson(beeName).getString())));
-                        }
-                    }
-
-                    list.add(Math.min(1, list.size()), Text.of(I18n.translate("tooltip.bees", beeCount)));
-                    list.add(Math.min(1, list.size()), Text.of(I18n.translate("tooltip.honey", honeyLevel)));
-                }
-            }
-        } catch (NullPointerException ex) {
-            System.out.println("NPE in getTooltipdone");
-            Item item = this.getItem();
-            if (item == null) {
-                System.out.println("item is null");
-            } else {
-                   System.out.println("item is "+this.getItem().getTranslationKey());
-            }
+            return Integer.parseInt(honeyLevelStr);
+        } catch (NumberFormatException e) {
+            System.out.println("MoreBeeInfo: could not parse honey_level '" + honeyLevelStr + "'");
+            return 0;
         }
     }
 }

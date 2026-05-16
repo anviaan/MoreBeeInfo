@@ -1,5 +1,4 @@
 {
-    "tooltip.bees": "§e 꿀벌 : %d",
-    "tooltip.honey": "§e 레벨 : %s/5",
-    "tooltip.name": "§e- %s"
+    "bee_info.tooltip.bees": "꿀벌",
+    "bee_info.tooltip.honey": "허니 레벨"
 }
