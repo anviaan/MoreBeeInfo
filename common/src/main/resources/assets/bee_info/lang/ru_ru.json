@@ -1,4 +1,4 @@
 {
-    "tooltip.bees": "Пчелы",
-    "tooltip.honey": "Мед"
+    "bee_info.tooltip.bees": "Пчелы",
+    "bee_info.tooltip.honey": "Уровень меда"
 }

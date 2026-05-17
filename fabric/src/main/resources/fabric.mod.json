@@ -12,14 +12,6 @@
         "sources": "https://github.com/anviaan/MoreBeeInfo",
         "issues": "https://github.com/anviaan/MoreBeeInfo/issues"
     },
-    "custom": {
-        "modmenu": {
-            "links": {
-                "modmenu.curseforge": "https://www.curseforge.com/minecraft/mc-mods/morebeeinfo",
-                "modmenu.modrinth": "https://modrinth.com/mod/morebeeinfo"
-            }
-        }
-    },
     "license": "${license}",
     "icon": "${mod_id}.png",
     "environment": "*",
@@ -34,9 +26,9 @@
     ],
     "depends": {
         "fabricloader": ">=${fabric_loader_version}",
-        "fabric-api": "*",
+        "fabric": "*",
         "minecraft": ">=${minecraft_version}",
-        "java": ">=${java_version}",
+        "java": ">=17",
         "anvianslib": ">=${anvianslib_version}"
     },
     "suggests": {
