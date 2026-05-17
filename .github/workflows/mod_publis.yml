@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Make Gradle Wrapper Executable
         run: chmod +x gradlew
@@ -62,6 +62,7 @@ jobs:
 
           dependencies: |
             fabric-api
+            forge-config-api-port
             anvians-lib
 
           java: ${{ env.JAVA_VERSION }}

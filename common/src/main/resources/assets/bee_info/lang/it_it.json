@@ -1,4 +1,4 @@
 {
-    "tooltip.bees": "Api",
-    "tooltip.honey": "Miele"
+    "bee_info.tooltip.bees": "Api",
+    "bee_info.tooltip.honey": "Livello del miele"
 }
